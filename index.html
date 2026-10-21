@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calcolatore BMI</title>
+  <style>
+    /* Regole principali per il layout */
+    body {
+      background-color: #f1f3f5;
+      color: #1f2328;
+      font-family: sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      /* Spazio laterale di 60px per desktop */
+      padding-left: 60px;
+      padding-right: 60px;
+      padding-top: 32px;
+      padding-bottom: 32px;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    /* Contenitore wrapper per titolo + card */
+    .app-container {
+      width: 100%;
+      max-width: 360px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Titolo posizionato all'esterno in alto al centro */
+    .main-title {
+      font-size: 32px;
+      font-weight: 800;
+      color: #1f2328;
+      margin-bottom: 24px;
+      text-align: center;
+      letter-spacing: -0.02em;
+    }
+
+    /* Card bianca con angoli arrotondati e ombra morbida */
+    .bmi-card {
+      background-color: #ffffff;
+      width: 100%;
+      padding: 24px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.07), 0 4px 12px -2px rgba(0, 0, 0, 0.03);
+      box-sizing: border-box;
+    }
+
+    /* Stile etichette dei campi */
+    .field-label {
+      font-size: 14px;
+      font-weight: 700;
+      color: #24292f;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    /* Stile campi di testo */
+    .custom-input {
+      width: 100%;
+      display: block;
+      padding: 10px 14px;
+      border: 1px solid #d8dee4;
+      border-radius: 8px;
+      font-size: 15px;
+      color: #57606a;
+      background-color: #ffffff;
+      outline: none;
+      box-sizing: border-box;
+     
+    }
+    /* Pulsante Calcola scuro */
+    .btn-calcola {
+      width: 100%;
+      background-color: #1f2328;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background-color 0.2s ease, transform 0.1s ease;
+    }
+
+    .btn-calcola:hover {
+      background-color: #2da44e;
+    }
+
+
+    /* Adattamento reattivo per schermi di cellulari */
+    @media (max-width: 320px) {
+      body {
+        padding-left: 20px;
+        padding-right: 20px;
+        
+      }
+
+      .main-title {
+        font-size: 28px;
+        margin-bottom: 20px;
+      }
+
+      .bmi-card {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Titolo centrato sopra la card -->
+    <h1 class="main-title">Calcolatore BMI</h1>
+
+    <!-- Card bianca -->
+    <main class="bmi-card">
+      <form id="bmiForm" method="post" action="calcolo_bmi.php" >
+        
+        <!-- Campo Nome -->
+        <div>
+          <label for="nome" class="field-label">Nome</label>
+          <input type="text" id="nome" name="nome" value="Luca" required class="custom-input"/>
+        </div>
+
+        <!-- Campo Peso -->
+        <div>
+          <label for="peso" class="field-label">Peso (kg)</label>
+          <input type="number" id="peso" name="peso" value="70" step="0.1" min="1" max="300" required class="custom-input"/>
+        </div>
+
+        <!-- Campo Altezza -->
+        <div>
+          <label for="altezza" class="field-label">Altezza (cm)</label>
+          <input type="number" id="altezza" name="altezza" value="178" step="1" min="30" max="250" required class="custom-input"/>
+        </div>
+
+        <!-- Pulsante Calcola -->
+        <button type="submit" class="btn-calcola">Calcola</button>
+      </form>
+    </main>
+  </div>
+
+</body>
+</html>
