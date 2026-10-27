@@ -1,7 +1,15 @@
 <?php
-$nome = isset($_POST['nome']) ? $_POST['nome'] : 'Utente';
-$peso = isset($_POST['peso']) ? floatval($_POST['peso']) : 0;
-$altezza_cm = isset($_POST['altezza']) ? floatval($_POST['altezza']) : 0;
+
+if($_SERVER["REQUEST_METHOD"] != "POST"){
+  header("location: index.html");
+}
+
+
+$nome = isset($_POST['nome']) ? $_POST['nome'] : 'NOT_VALID';
+$peso = isset($_POST['peso']) ? $_POST['peso'] : 'NOT_VALID';
+$altezza_cm = isset($_POST['altezza']) ? $_POST['altezza'] : 'NOT_VALID';
+
+
 
 $bmi = 0;
 $classe_card = 'normopeso';
@@ -26,6 +34,29 @@ if ($altezza_cm > 0 && $peso > 0) {
         $fascia = 'OBESITÀ';
     }
 }
+
+
+$data = date("d/m/o, H/i/s");
+
+$ip = $_SERVER["SERVER_ADDR"];
+
+if($nome == "NOT_VALID" || $peso == "NOT_VALID" || $altezza_cm == "NOT_VALID"){
+  $fascia = "NOT_VALID";
+  $record = implode("," ,[$ip, $data, $nome, $peso, $altezza_cm, $fascia]);  
+}
+
+
+
+$record = implode("," ,[$ip, $data, $nome, $peso, $altezza_cm, $fascia]). PHP_EOL;
+
+$nomeFile = "log.csv";
+
+$file = fopen($nomeFile,"a");
+
+fwrite($file, $record);
+
+fclose($file);  
+
 ?>
 <!DOCTYPE html>
 <html lang="it">
@@ -45,7 +76,7 @@ if ($altezza_cm > 0 && $peso > 0) {
         <div class="result-category"><?php echo $fascia; ?></div>
       </div>
     </main>
-    <a href="form.html" class="recalculate-link">Calcola di nuovo</a>
+    <a href="index.html" class="recalculate-link">Calcola di nuovo</a>
   </div>
 </body>
 </html>
