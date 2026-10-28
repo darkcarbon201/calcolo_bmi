@@ -4,11 +4,9 @@ if($_SERVER["REQUEST_METHOD"] != "POST"){
   header("location: index.html");
 }
 
-
-$nome = isset($_POST['nome']) ? $_POST['nome'] : 'NOT_VALID';
-$peso = isset($_POST['peso']) ? $_POST['peso'] : 'NOT_VALID';
-$altezza_cm = isset($_POST['altezza']) ? $_POST['altezza'] : 'NOT_VALID';
-
+$nome = (!isset($_POST['nome']) || $_POST['nome'] == '') ? 'NOT_VALID' : $_POST['nome'];
+$peso = (!isset($_POST['peso']) || $_POST['peso'] == '') ? 'NOT_VALID' : $_POST['peso']; 
+$altezza_cm = (!isset($_POST['altezza']) || $_POST['altezza'] == '') ? 'NOT_VALID' : $_POST['altezza'];
 
 
 $bmi = 0;
@@ -40,9 +38,8 @@ $data = date("d/m/o, H/i/s");
 
 $ip = $_SERVER["SERVER_ADDR"];
 
-if($nome == "NOT_VALID" || $peso == "NOT_VALID" || $altezza_cm == "NOT_VALID"){
+if($nome == "NOT_VALID" || $peso == "NOT_VALID" || $altezza_cm == "NOT_VALID" ){
   $fascia = "NOT_VALID";
-  $record = implode("," ,[$ip, $data, $nome, $peso, $altezza_cm, $fascia]);  
 }
 
 
@@ -80,3 +77,4 @@ fclose($file);
   </div>
 </body>
 </html>
+
