@@ -44,7 +44,7 @@ if($nome == "NOT_VALID" || $peso == "NOT_VALID" || $altezza_cm == "NOT_VALID" ){
 
 
 
-$record = implode("," ,[$ip, $data, $nome, $peso, $altezza_cm, $fascia]). PHP_EOL;
+$record = implode("," ,[$ip, $data, $nome, $peso, $altezza_cm, $bmi, $fascia]). PHP_EOL;
 
 $nomeFile = "log.csv";
 
