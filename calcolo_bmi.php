@@ -34,7 +34,7 @@ if ($altezza_cm > 0 && $peso > 0) {
 }
 
 
-$data = date("d/m/o, H/i/s");
+$data = date("d/m/o, H:i:s");
 
 $ip = $_SERVER["SERVER_ADDR"];
 
