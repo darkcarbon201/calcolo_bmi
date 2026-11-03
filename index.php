@@ -5,7 +5,7 @@ $mostra_risultato = false;
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 
   $mostra_risultato = true; 
-  
+
   $nome = (!isset($_POST['nome']) || $_POST['nome'] == '') ? 'NOT_VALID' : $_POST['nome'];
   $peso = (!isset($_POST['peso']) || $_POST['peso'] == '') ? 'NOT_VALID' : $_POST['peso']; 
   $altezza_cm = (!isset($_POST['altezza']) || $_POST['altezza'] == '') ? 'NOT_VALID' : $_POST['altezza'];
@@ -61,6 +61,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 
 ?>
+
+
+
+
+
+<?php if ($mostra_risultato == "true"): ?>
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -79,15 +85,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <div class="result-category"><?php echo $fascia; ?></div>
       </div>
     </main>
-    <a href="index.html" class="recalculate-link">Calcola di nuovo</a>
+    <a href="index.php" class="recalculate-link">Calcola di nuovo</a>
   </div>
 </body>
 </html>
+<?php else: ?>
 
-
-
-
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8">
@@ -130,3 +134,5 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 </body>
 </html>
+
+<?php endif ?>
