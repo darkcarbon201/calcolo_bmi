@@ -1,0 +1,132 @@
+<?php
+
+$mostra_risultato = false;
+
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+
+  $mostra_risultato = true; 
+  
+  $nome = (!isset($_POST['nome']) || $_POST['nome'] == '') ? 'NOT_VALID' : $_POST['nome'];
+  $peso = (!isset($_POST['peso']) || $_POST['peso'] == '') ? 'NOT_VALID' : $_POST['peso']; 
+  $altezza_cm = (!isset($_POST['altezza']) || $_POST['altezza'] == '') ? 'NOT_VALID' : $_POST['altezza'];
+
+
+  $bmi = 0;
+  $classe_card = 'normopeso';
+  $fascia = 'NORMOPESO';
+
+
+  if ($altezza_cm > 0 && $peso > 0) {
+      $altezza_m = $altezza_cm / 100;
+      $bmi = $peso / ($altezza_m * $altezza_m);
+        
+        
+      if ($bmi < 18.5) {
+          $classe_card = 'sottopeso';
+          $fascia = 'SOTTOPESO';
+      } else if ($bmi <= 24.9) {
+          $classe_card = 'normopeso';
+          $fascia = 'NORMOPESO';
+      } else if ($bmi <= 29.9) {
+          $classe_card = 'sovrappeso';
+          $fascia = 'SOVRAPPESO';
+      } else {
+          $classe_card = 'obesita';
+          $fascia = 'OBESITÀ';
+      }
+    }
+
+
+    $data = date("d/m/o, H:i:s");
+
+    $ip = $_SERVER["SERVER_ADDR"];
+
+    if($nome == "NOT_VALID" || $peso == "NOT_VALID" || $altezza_cm == "NOT_VALID" ){
+      $fascia = "NOT_VALID";
+    }
+
+
+
+    $record = implode("," ,[$ip, $data, $nome, $peso, $altezza_cm, $bmi, $fascia]). PHP_EOL;
+
+    $nomeFile = "log.csv";
+
+    $file = fopen($nomeFile,"a");
+
+    fwrite($file, $record);
+
+    fclose($file);  
+
+}
+
+
+?>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Il tuo BMI</title>
+  <link rel="stylesheet" href="stile.css">
+</head>
+<body>
+  <div class="app-container">
+    <h1 class="main-title">Il tuo BMI</h1>
+    <main class="bmi-card">
+      <div class="card <?php echo $classe_card; ?>">
+        <div class="result-name"><?php echo $nome; ?></div>
+        <div class="result-details">Peso <?php echo $peso; ?> kg · Altezza <?php echo $altezza_cm; ?> cm</div>
+        <div class="result-value"><?php echo number_format($bmi, 2); ?></div>
+        <div class="result-category"><?php echo $fascia; ?></div>
+      </div>
+    </main>
+    <a href="index.html" class="recalculate-link">Calcola di nuovo</a>
+  </div>
+</body>
+</html>
+
+
+
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calcolatore BMI</title>
+   <link rel="stylesheet" href="stile.css">
+</head>
+<body>
+
+  <div class="app-container">
+   
+    <h1 class="main-title">Calcolatore BMI</h1>
+
+  
+    <main class="bmi-card">
+      <form id="bmiForm" method="post" action="index.php" >
+        
+       
+        <div>
+          <label for="nome" class="field-label">Nome</label>
+          <input type="text" id="nome" name="nome" value="Luca"  class="custom-input"/>
+        </div>
+
+        
+        <div>
+          <label for="peso" class="field-label">Peso (kg)</label>
+          <input type="number" id="peso" name="peso" value="70" step="0.1" min="1" max="300" required class="custom-input"/>
+        </div>
+
+        <div>
+          <label for="altezza" class="field-label">Altezza (cm)</label>
+          <input type="number" id="altezza" name="altezza" value="178" step="1" min="30" max="250" required  class="custom-input"/>
+        </div>
+
+       
+        <button type="submit" class="btn-calcola">Calcola</button>
+      </form>
+    </main>
+  </div>
+
+</body>
+</html>
