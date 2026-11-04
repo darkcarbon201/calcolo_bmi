@@ -45,6 +45,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
       $fascia = "NOT_VALID";
     }
 
+    $errore_nome = true;
+    $errore_peso = true;
+    $errore_altezza = true;
+    if($nome == "NOT_VALID"){
+      $errore_nome = false;
+    }
+
+
 
 
     $record = implode("," ,[$ip, $data, $nome, $peso, $altezza_cm, $bmi, $fascia]). PHP_EOL;
@@ -113,17 +121,27 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <div>
           <label for="nome" class="field-label">Nome</label>
           <input type="text" id="nome" name="nome" value="Luca"  class="custom-input"/>
+          <?php if($errore_nome == "false"): ?>
+            <p>ERRORE!</p>
+          <?php endif ?>
+          
         </div>
 
         
         <div>
           <label for="peso" class="field-label">Peso (kg)</label>
           <input type="number" id="peso" name="peso" value="70" step="0.1" min="1" max="300" required class="custom-input"/>
+          <?php if($errore_peso == "false"): ?>
+            <p>ERRORE!</p>
+          <?php endif ?>
         </div>
 
         <div>
           <label for="altezza" class="field-label">Altezza (cm)</label>
           <input type="number" id="altezza" name="altezza" value="178" step="1" min="30" max="250" required  class="custom-input"/>
+          <?php if($errore_altezza == "false"): ?>
+            <p>ERRORE!</p>
+          <?php endif ?>
         </div>
 
        
